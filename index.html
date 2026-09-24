@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Edgar Amador Spinoza – Interactive CV</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#F4F6FA;--card:#fff;--tx:#1B2A41;--mu:#6B7A90;--tx2:#4A5A70;--bd:#E1E6EE;--hd:#EEF2F7;--gr:#E9EDF3;--nav:#0B2545;--navtx:#fff;--sh:0 1px 4px rgba(11,37,69,.12)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0B1526;--card:#12213A;--tx:#EAF0FA;--mu:#93A4BF;--tx2:#B7C4DA;--bd:#223558;--hd:#1A2C4A;--gr:#223558;--nav:#EAF0FA;--navtx:#0B2545;--sh:none}}
+:root[data-theme="dark"]{--bg:#0B1526;--card:#12213A;--tx:#EAF0FA;--mu:#93A4BF;--tx2:#B7C4DA;--bd:#223558;--hd:#1A2C4A;--gr:#223558;--nav:#EAF0FA;--navtx:#0B2545;--sh:none}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:"Segoe UI",Arial,sans-serif;padding:16px}
+.wrap{max-width:1200px;margin:auto}
+.top{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+h1{margin:0;font-size:22px}.sum{font-size:12px;color:var(--mu);max-width:640px;margin-top:6px;line-height:1.5}
+.nav{display:flex;border-radius:6px;overflow:hidden;border:1px solid var(--bd);box-shadow:var(--sh)}
+.nav button{border:0;padding:9px 22px;font-size:12px;background:var(--card);color:var(--tx);cursor:pointer;font-family:inherit}
+.nav button.on{background:var(--nav);color:var(--navtx);font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:0;margin-bottom:12px;border:1px solid var(--bd);border-radius:6px;overflow:hidden;width:max-content;max-width:100%;box-shadow:var(--sh)}
+.chips button{border:0;border-right:1px solid var(--bd);padding:8px 16px;font-size:12px;background:var(--card);color:var(--tx);cursor:pointer;font-family:inherit}
+.chips button:last-child{border-right:0}.chips button.on{background:#1D4E89;color:#fff}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:14px;box-shadow:var(--sh);min-width:0}
+h2{font-size:14px;margin:0 0 10px;font-weight:600}
+.g{display:grid;gap:14px;grid-template-columns:5fr 6fr}
+.col{display:flex;flex-direction:column;gap:14px;min-width:0}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kpi b{display:block;font-size:26px;color:#1D4E89;line-height:1.1}.kpi span{font-size:12px;color:var(--tx2)}
+[data-theme="dark"] .kpi b{color:#7FB0F0}
+.ov{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:11px}
+th{background:var(--hd);text-align:left;padding:5px 6px;font-weight:600;white-space:nowrap}
+td{padding:5px 6px;border-bottom:1px solid var(--gr);vertical-align:top}
+.ach div{font-size:12px;color:var(--tx2);margin-bottom:6px;line-height:1.45}
+.gr{display:grid;grid-template-columns:minmax(120px,38%) 1fr;gap:8px;align-items:center;font-size:11px;margin-bottom:7px;cursor:default}
+.gr.click{cursor:pointer}.gr .t{position:relative;height:16px;border-left:1px solid var(--gr)}
+.gr.dim{opacity:.3}.bar{position:absolute;top:1px;height:14px;border-radius:2px;min-width:4px}
+.ax{position:relative;height:16px;margin-left:calc(38% + 8px);font-size:10px;color:var(--mu)}.ax span{position:absolute;transform:translateX(-50%)}
+.gl{position:absolute;top:0;bottom:0;border-left:1px solid var(--gr)}
+.don{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:center}
+.ring{width:170px;height:170px;border-radius:50%;position:relative;flex:none}
+.ring:after{content:"";position:absolute;inset:38px;border-radius:50%;background:var(--card)}
+.lg{font-size:11px;color:var(--tx2)}.lg div{margin-bottom:4px}.lg i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
+.al{display:flex;gap:14px;font-size:11px;color:var(--tx2);justify-content:center;margin-top:10px;flex-wrap:wrap}.al i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px}
+.sk{display:flex;align-items:flex-end;gap:6px;height:190px;padding-top:14px}
+.sk div{flex:1;text-align:center;display:flex;flex-direction:column;justify-content:flex-end;height:100%;font-size:9px;color:var(--tx2)}
+.sk .b{background:#1D4E89;border-radius:2px 2px 0 0;margin:0 auto;width:70%;color:#fff;font-weight:600;font-size:10px;padding-top:2px}
+.sk span{display:block;height:34px;margin-top:4px;line-height:1.15}
+.p2{display:none}.p2 .g2{display:grid;gap:14px;grid-template-columns:5fr 6fr}
+.title2{font-size:28px;font-weight:700;margin:0 0 12px}
+.hint{font-size:11px;color:var(--mu);margin:-4px 0 8px}
+@media(max-width:860px){.g,.p2 .g2{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}}
+</style></head><body><div class="wrap">
+<div id="p1">
+<div class="top"><div><h1>Edgar Amador Spinoza</h1><div class="sum">Sales Analytics &amp; Business Intelligence Professional with 7+ years of experience transforming commercial, supply chain and manufacturing data into actionable insights. Skilled in Power BI, Power Query, Advanced Excel and executive reporting.</div></div><div class="nav"><button class="on">Resume</button><button onclick="pg(2)">Experience Detail</button></div></div>
+<div class="g"><div class="col">
+<div class="chips" data-chips></div>
+<div class="kpis" id="kpis"></div>
+<div class="card ov"><table><thead><tr><th>Program</th><th>Institution</th><th>First year</th><th>Last year</th><th>Level</th></tr></thead><tbody id="edu"></tbody></table></div>
+<div class="card"><h2>Career Experience Distribution</h2><svg id="dn" viewBox="0 0 560 340" style="width:100%;max-width:560px;display:block;margin:auto"></svg><div class="al" id="al"></div></div>
+</div><div class="col">
+<div class="card ach"><h2>Key Achievements</h2>
+<div>Built and maintain sales performance dashboards used by regional sales teams and leadership.</div>
+<div>Cut monthly reporting time by 80% by consolidating multiple data sources with Power Query.</div>
+<div>Monitored backorder and service-level metrics for key customers, supporting faster resolution of delayed orders.</div>
+<div style="margin:0">Promoted to Sales Analyst in 2025 after 4 years as Sales Support Representative Analyst at Sandvik.</div></div>
+<div class="card"><h2>Professional History</h2><div id="gantt1"></div></div>
+<div class="card"><h2>Skills</h2><div class="sk" id="sk"></div></div>
+</div></div></div>
+
+<div id="p2" class="p2">
+<div class="top"><div class="title2">Experience Detail</div><div class="nav"><button onclick="pg(1)">Resume</button><button class="on">Experience Detail</button></div></div>
+<div class="chips" data-chips></div>
+<div class="g2"><div class="card ov"><table><thead><tr><th>Job</th><th>Responsibilities</th></tr></thead><tbody id="resp"></tbody></table></div>
+<div class="card"><h2>Professional History</h2><div class="hint">Click a bar to filter the responsibilities. Click again to clear.</div><div id="gantt2"></div></div></div>
+</div></div>
+<script>
+const A={"Sales Analytics":"#1D4E89","Supply Chain Planning":"#E9A23B","Manufacturing / Industrial":"#2A9D8F"};
+const J=[[1,"Sandvik","Sales Analyst","Sales Analytics",139,13,"Sales analyst"],[2,"Sandvik","Sales Support Representative Analyst","Sales Analytics",92,47,"Sales support representative analyst"],[3,"HP","Planner","Supply Chain Planning",66,10,"Planner"],[4,"Plexus Corp.","Industrial Technician","Manufacturing / Industrial",49,3,"Industrial technician"],[5,"Continental","Industrial Engineer Jr.","Manufacturing / Industrial",42,6,"Industrial engineer jr."],[6,"Vitro S.A. de C.V.","Lean Trainee","Manufacturing / Industrial",0,5,"Lean trainee"]];
+const R={1:["Analyze commercial databases to identify trends, opportunities and risks","Consolidate and analyze sales information from multiple sources","Develop and maintain sales performance dashboards and KPI reporting tools","Generate executive reports and presentations for sales leadership","Provide analytical support to regional sales teams"],
+2:["Create executive presentations and commercial performance reviews","Develop and maintain sales dashboards and performance reports","Monitor Backorder performance and service-level metrics for key customers","Prepare pricing and profitability analyses","Support sales teams through data-driven insights and reporting"],
+3:["Created logistics and inventory analysis reports using Excel","Developed forecasts to support supply chain requirements","Generated purchase orders and monitored supplier performance","Managed material planning and purchasing activities through SAP"],
+4:["Collaborated with cross-functional teams on production and engineering projects","Participated in equipment installation, workstation setup and production routing","Provided operational support to manufacturing and production lines","Supported facility layout modifications and workspace optimization"],
+5:["Conducted 5S audits (Lean Manufacturing)","Conducted time and motion studies","Developed Overall Balance Charts (OBC) for production line performance","Executed line balancing activities","Maintained production routings within SAP","Participated in continuous improvement projects","Performed capacity analysis for production planning"],
+6:["Developed Pareto charts from monthly equipment failure reports","Led a continuous improvement project to reduce production downtime","Prioritized improvement opportunities based on data","Supported cost reduction and profitability initiatives"]};
+const E=[["Diploma in Business Intelligence and Data Analytics","Universidad del Valle de México",2021,2021,"Professional Diploma"],["Specialization in Financial Management of Projects and Businesses","Universidad Autónoma de Guadalajara",2016,2016,"Specialization"],["Bachelor's Degree in Industrial Engineering","Universidad Autónoma de Guadalajara",2012,2015,"Bachelor's"]];
+const S=[["Advanced Microsoft Excel",5],["Data Visualization & Analytics",5],["Executive Reporting",5],["Sales Forecasting",5],["Lean Manufacturing & 5S Methodology",4],["Power BI Dashboard Development",4],["Power Query (Data Transformation)",4],["Line Balancing & Time and Motion Studies",3]];
+let sel=new Set(),job=null;
+const $=id=>document.getElementById(id);
+const fj=()=>J.filter(j=>!sel.size||sel.has(j[3]));
+function chips(){document.querySelectorAll("[data-chips]").forEach(c=>{c.innerHTML=Object.keys(A).map(k=>`<button class="${sel.has(k)?"on":""}" data-k="${k}">${k}</button>`).join("")});
+document.querySelectorAll("[data-chips] button").forEach(b=>b.onclick=()=>{const k=b.dataset.k;sel.has(k)?sel.delete(k):sel.add(k);job=null;draw()})}
+function gantt(id,click){const f=fj();let h="";f.forEach(j=>{const l=j[4]/156*100,w=j[5]/156*100;
+h+=`<div class="gr ${click?"click":""} ${job&&job!=j[0]?"dim":""}" data-j="${j[0]}"><div>${j[1]} · ${j[2]}</div><div class="t">${[0,2,4,6,8,10,12].map(i=>`<div class="gl" style="left:${i*12/156*100}%"></div>`).join("")}<div class="bar" style="left:${l}%;width:${w}%;background:${A[j[3]]}"></div></div></div>`});
+h+=`<div class="ax">${[0,2,4,6,8,10,12].map(i=>`<span style="left:${i*12/156*100}%">${2014+i}</span>`).join("")}</div>`;
+$(id).innerHTML=h;if(click)$(id).querySelectorAll(".gr").forEach(r=>r.onclick=()=>{const v=+r.dataset.j;job=job==v?null:v;draw()})}
+function draw(){chips();const f=fj(),m=f.reduce((s,j)=>s+j[5],0);
+$("kpis").innerHTML=[[(m/12).toFixed(2),"Years of relevant experience"],[new Set(f.map(j=>j[1])).size,"Companies"],[f.length,"Positions"],[E.length,"Academic programs"]].map(k=>`<div class="card kpi"><b>${k[0]}</b><span>${k[1]}</span></div>`).join("");
+$("edu").innerHTML=E.map(e=>`<tr>${e.map(c=>`<td>${c}</td>`).join("")}</tr>`).join("");
+donut(f,m);
+$("al").innerHTML=Object.keys(A).map(k=>`<span><i style="background:${A[k]}"></i>${k}</span>`).join("");
+$("sk").innerHTML=S.map(s=>`<div><div class="b" style="height:${s[1]/5*100}%;margin-top:auto">${s[1]}</div><span>${s[0]}</span></div>`).join("");
+$("sk").querySelectorAll(":scope>div").forEach(d=>{d.style.height="100%"});
+gantt("gantt1",false);gantt("gantt2",true);
+const rows=[];f.filter(j=>!job||j[0]==job).forEach(j=>R[j[0]].forEach(t=>rows.push(`<tr><td>${j[6]}</td><td>${t}</td></tr>`)));
+$("resp").innerHTML=rows.join("")}
+function donut(f,m){const cx=280,cy=170,R=92,r=58,ord=Object.keys(A).sort(),d=[...f].sort((a,b)=>ord.indexOf(a[3])-ord.indexOf(b[3])||a[0]-b[0]);
+const pt=(a,q)=>[cx+q*Math.sin(a),cy-q*Math.cos(a)],wrap=(t,pc)=>{const ln=[];let c="";t.split(" ").forEach(x=>{if((c+" "+x).trim().length>22){ln.push(c);c=x}else c=(c+" "+x).trim()});ln.push(c);ln.push(pc);return ln};
+let a0=0,sh="",L=[];
+d.forEach(j=>{const fr=j[5]/m,a1=a0+fr*2*Math.PI,e=Math.min(a1,a0+2*Math.PI-.0001),lg=fr>.5?1:0,P=[pt(a0,R),pt(e,R),pt(e,r),pt(a0,r)];
+sh+=`<path d="M${P[0]}A${R},${R} 0 ${lg} 1 ${P[1]}L${P[2]}A${r},${r} 0 ${lg} 0 ${P[3]}Z" fill="${A[j[3]]}" stroke="var(--card)" stroke-width="2.5"/>`;
+const am=(a0+a1)/2,ln=wrap(j[2],(fr*100).toFixed(2)+"%");L.push({am,ln,h:ln.length*13,p1:pt(am,R+2),p2:pt(am,R+14),y:pt(am,R+14)[1],r:Math.sin(am)>=0});a0=a1});
+const G=12,T=16,B=324;
+[true,false].forEach(sd=>{const g=L.filter(l=>l.r==sd).sort((x,y)=>x.y-y.y);
+g.forEach((l,i)=>{const lo=i?g[i-1].y+g[i-1].h/2+G+l.h/2:T+l.h/2;if(l.y<lo)l.y=lo});
+for(let i=g.length-1;i>=0;i--){const hi=i<g.length-1?g[i+1].y-g[i+1].h/2-G-g[i].h/2:B-g[i].h/2;if(g[i].y>hi)g[i].y=hi}});
+L.forEach(l=>{const sg=l.r?1:-1,xc=cx+sg*(R+46);
+sh+=`<polyline points="${l.p1} ${l.p2} ${xc},${l.y} ${xc+sg*6},${l.y}" fill="none" stroke="var(--mu)" stroke-width=".8"/>`;
+const y0=l.y-l.h/2+10;
+sh+=`<text text-anchor="${l.r?"start":"end"}" font-size="11" fill="var(--tx)">${l.ln.map((t,i)=>`<tspan x="${xc+sg*10}" y="${y0+i*13}"${i==l.ln.length-1?' font-weight="600"':""}>${t}</tspan>`).join("")}</text>`});
+$("dn").innerHTML=sh}
+function pg(n){$("p1").style.display=n==1?"":"none";$("p2").style.display=n==2?"block":"none";window.scrollTo(0,0)}
+draw();
+</script></body></html>
