@@ -53,6 +53,10 @@ td{padding:5px 6px;border-bottom:1px solid var(--gr);vertical-align:top}
 #gantt2 .gr{flex:1;min-height:44px;margin-bottom:0;font-size:11.5px}
 #gantt2 .t{height:auto;align-self:stretch}
 #gantt2 .bar{top:50%;height:26px;transform:translateY(-50%);border-radius:3px}
+#gantt2 .gr{cursor:pointer}.lab{position:absolute;top:50%;transform:translateY(-50%);font-size:10px;color:var(--mu);white-space:nowrap}
+.sm{font-size:11px;color:var(--tx2);margin-bottom:8px}.sm a{color:#1D4E89;margin-left:8px;cursor:pointer;text-decoration:underline}
+#resp td{font-size:11px}.jh td{background:var(--hd);padding:7px 8px;border-bottom:0}.jh span{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px}
+.jh em{font-style:normal;color:var(--mu);margin-left:8px;font-size:10px}.rt{padding-left:22px}
 @media(max-width:860px){.g,.p2 .g2{grid-template-columns:1fr}}
 </style></head><body><div class="wrap">
 <div id="p1">
@@ -76,8 +80,8 @@ td{padding:5px 6px;border-bottom:1px solid var(--gr);vertical-align:top}
 <div id="p2" class="p2">
 <div class="top"><div class="title2">Experience Detail</div><div class="nav"><button onclick="pg(1)">Resume</button><button class="on">Experience Detail</button></div></div>
 <div class="chips" data-chips></div>
-<div class="g2"><div class="card ov"><table><thead><tr><th>Job</th><th>Responsibilities</th></tr></thead><tbody id="resp"></tbody></table></div>
-<div class="card"><h2>Professional History</h2><div class="hint">Click a bar to filter the responsibilities. Click again to clear.</div><div id="gantt2"></div></div></div>
+<div class="g2"><div class="card ov"><div class="sm" id="selmsg"></div><table><thead><tr><th>Responsibilities</th></tr></thead><tbody id="resp"></tbody></table></div>
+<div class="card"><h2>Professional History</h2><div class="hint">Click a bar to filter the responsibilities. Click again to clear.</div><div id="gantt2"></div><div class="al" id="al2"></div></div></div>
 </div></div>
 <script>
 const A={"Sales Analytics":"#1D4E89","Supply Chain Planning":"#E9A23B","Manufacturing / Industrial":"#2A9D8F"};
@@ -90,13 +94,17 @@ const R={1:["Analyze commercial databases to identify trends, opportunities and 
 6:["Developed Pareto charts from monthly equipment failure reports","Led a continuous improvement project to reduce production downtime","Prioritized improvement opportunities based on data","Supported cost reduction and profitability initiatives"]};
 const E=[["Diploma in Business Intelligence and Data Analytics","Universidad del Valle de México",2021,2021,"Professional Diploma"],["Specialization in Financial Management of Projects and Businesses","Universidad Autónoma de Guadalajara",2016,2016,"Specialization"],["Bachelor's Degree in Industrial Engineering","Universidad Autónoma de Guadalajara",2012,2015,"Bachelor's"]];
 const S=[["Advanced Microsoft Excel",5],["Data Visualization & Analytics",5],["Executive Reporting",5],["Sales Forecasting",5],["Lean Manufacturing & 5S Methodology",4],["Power BI Dashboard Development",4],["Power Query (Data Transformation)",4],["Line Balancing & Time and Motion Studies",3]];
+const MO=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],fm=i=>MO[i%12]+" "+(2014+Math.floor(i/12)),
+dur=m=>[m>=12?Math.floor(m/12)+"y":"",m%12?m%12+"m":""].join(" ").trim(),
+lab=j=>fm(j[4])+" – "+(j[0]==1?"Present":fm(j[4]+j[5]))+" ("+dur(j[5])+")",
+lbl=(j,l,w)=>`<div class="lab" style="${l+w>62?"right:"+(100-l)+"%;margin-right:6px":"left:"+(l+w)+"%;margin-left:6px"}">${lab(j)}</div>`;
 let sel=new Set(),job=null;
 const $=id=>document.getElementById(id),ORD=["Supply Chain Planning","Sales Analytics","Manufacturing / Industrial"];
 const fj=()=>J.filter(j=>!sel.size||sel.has(j[3]));
 function chips(){document.querySelectorAll("[data-chips]").forEach(c=>{c.innerHTML=ORD.map(k=>`<button class="${sel.has(k)?"on":""}" data-k="${k}">${k}</button>`).join("")});
 document.querySelectorAll("[data-chips] button").forEach(b=>b.onclick=()=>{const k=b.dataset.k;sel.has(k)?sel.delete(k):sel.add(k);job=null;draw()})}
 function gantt(id,click){const f=fj();let h="";f.forEach(j=>{const l=j[4]/156*100,w=j[5]/156*100;
-h+=`<div class="gr ${click?"click":""} ${job&&job!=j[0]?"dim":""}" data-j="${j[0]}"><div>${j[1]} · ${j[2]}</div><div class="t">${[0,2,4,6,8,10,12].map(i=>`<div class="gl" style="left:${i*12/156*100}%"></div>`).join("")}<div class="bar" style="left:${l}%;width:${w}%;background:${A[j[3]]}"></div></div></div>`});
+h+=`<div class="gr ${click?"click":""} ${job&&job!=j[0]?"dim":""}" data-j="${j[0]}"><div>${j[1]} · ${j[2]}</div><div class="t">${[0,2,4,6,8,10,12].map(i=>`<div class="gl" style="left:${i*12/156*100}%"></div>`).join("")}<div class="bar" style="left:${l}%;width:${w}%;background:${A[j[3]]}"></div>${click?lbl(j,l,w):""}</div></div>`});
 h+=`<div class="ax">${[0,2,4,6,8,10,12].map(i=>`<span style="left:${i*12/156*100}%">${2014+i}</span>`).join("")}</div>`;
 $(id).innerHTML=h;if(click)$(id).querySelectorAll(".gr").forEach(r=>r.onclick=()=>{const v=+r.dataset.j;job=job==v?null:v;draw()})}
 function draw(){chips();const f=fj(),m=f.reduce((s,j)=>s+j[5],0);
@@ -106,7 +114,11 @@ donut(f,m);
 $("al").innerHTML=Object.keys(A).sort().map(k=>`<span><i style="background:${A[k]}"></i>${k}</span>`).join("");
 $("sk").innerHTML=S.map(s=>`<div><div class="bw"><i style="flex:${5-s[1]}"></i><div class="b" style="flex:${s[1]}"></div></div><span>${s[0]}</span></div>`).join("");
 gantt("gantt1",false);gantt("gantt2",true);
-const rows=[];f.filter(j=>!job||j[0]==job).forEach(j=>R[j[0]].forEach(t=>rows.push(`<tr><td>${j[6]}</td><td>${t}</td></tr>`)));
+const rows=[],sj=job&&J.find(j=>j[0]==job);
+f.filter(j=>!job||j[0]==job).forEach(j=>{rows.push(`<tr class="jh"><td><span style="background:${A[j[3]]}"></span><b>${j[2]}</b> · ${j[1]}<em>${lab(j)}</em></td></tr>`);R[j[0]].forEach(t=>rows.push(`<tr><td class="rt">${t}</td></tr>`))});
+$("selmsg").innerHTML=sj?`Showing: <b>${sj[2]} · ${sj[1]}</b><a id="clr">Clear filter</a>`:"Showing all positions";
+if(sj)$("clr").onclick=()=>{job=null;draw()};
+$("al2").innerHTML=$("al").innerHTML;
 $("resp").innerHTML=rows.join("")}
 function donut(f,m){const cx=280,cy=170,R=100,r=72,ord=Object.keys(A).sort(),d=[...f].sort((a,b)=>ord.indexOf(a[3])-ord.indexOf(b[3])||a[0]-b[0]);
 const pt=(a,q)=>[cx+q*Math.sin(a),cy-q*Math.cos(a)],wrap=(t,pc)=>{const ln=[];let c="";t.split(" ").forEach(x=>{if((c+" "+x).trim().length>22){ln.push(c);c=x}else c=(c+" "+x).trim()});ln.push(c);ln.push(pc);return ln};
